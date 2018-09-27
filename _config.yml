@@ -29,6 +29,8 @@ markdown: kramdown
 theme: minima
 plugins: [jekyll-paginate, jekyll-feed, jekyll-gist]
 
+gems: 
+    -jekyll-gist
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
