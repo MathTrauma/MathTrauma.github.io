@@ -1,11 +1,36 @@
----
-layout: home
-author_profile: true
----
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<div id="trauma">
+			<canvas id="canvas"> </canvas>
+		</div>
 
-
-<title>MathTrauma</title>
-
-
-<h1> {{ "! Trauma !" | downcase }} </h1>
-
+		<div class="modal hidden">
+			<div class="modal-wrapper">
+				<div class="modal-header">
+					<h1 class="modal-title">Project One</h1>
+					<div class="modal-exit-button">exit</div>
+				</div>
+			
+				<div class="modal-content">
+					<div class="modal-content-wrapper">
+						<a href="#" 
+							target="_blank"
+							rel="noopener noreferrer"
+							class="modal-project-visit-button hidden">View Project</a>
+						<div class="modal-project-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque voluptates deleniti, dolore omnis perspiciatis fugiat odio dicta exercitationem sed! Quia libero possimus numquam laudantium, delectus quos non earum excepturi quisquam.
+						Reiciendis, fugit nam ad dolor illo modi enim sint asperiores eveniet nemo nobis sapiente eligendi, omnis est vel, animi quisquam! Doloribus at mollitia corrupti eius sunt distinctio sapiente enim optio.
+						Quas cumque, est obcaecati inventore molestias similique iusto nam sint vero recusandae provident repellat tenetur ad laborum omnis sequi autem laboriosam temporibus dolorem! Quod quae necessitatibus dolorem libero quibusdam similique.
+						Omnis reprehenderit facilis eius distinctio libero vero velit in deleniti voluptatem iste quos itaque repellendus, exercitationem inventore necessitatibus voluptate natus harum accusantium maiores accusamus perferendis nam? Molestias porro facere reprehenderit!</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="module" src="/src/main.js"></script>

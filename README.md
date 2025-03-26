@@ -1,1 +1,0 @@
-# MathTrauma.github.io

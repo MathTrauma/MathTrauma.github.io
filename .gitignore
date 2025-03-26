@@ -1,29 +1,26 @@
-# Vim
-*~
-*.sw[p_]
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Ruby Gem
-*.gem
-.bundle
-Gemfile.lock
-**/vendor/bundle
-
-# Node.js and NPM
-node_modules
-npm-debug.log*
-package-lock.json
-codekit-config.json
-
-# macOS
 .DS_Store
+*.swp
+.project
+.idea/
+.vscode/
+npm-debug.log
+.jshintrc
+.vs/
 
-# Jekyll generated files
-.jekyll-cache
-.jekyll-metadata
-.sass-cache
-_asset_bundler_cache
-_site
+test/unit/build
+test/treeshake/index-src.bundle.min.js
+test/treeshake/index.bundle.js
+test/treeshake/index.bundle.min.js
+test/treeshake/index.webgpu.bundle.js
+test/treeshake/index.webgpu.bundle.min.js
+test/treeshake/index.webgpu.nodes.bundle.js
+test/treeshake/index.webgpu.nodes.bundle.min.js
+test/treeshake/stats.html
+test/e2e/chromium
+test/e2e/output-screenshots
+
+
+**/dist
+**/dist-ssr
+**/node_modules
+**/docs_new
