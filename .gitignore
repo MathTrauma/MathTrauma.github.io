@@ -7,17 +7,17 @@ npm-debug.log
 .jshintrc
 .vs/
 
-test/unit/build
-test/treeshake/index-src.bundle.min.js
-test/treeshake/index.bundle.js
-test/treeshake/index.bundle.min.js
-test/treeshake/index.webgpu.bundle.js
-test/treeshake/index.webgpu.bundle.min.js
-test/treeshake/index.webgpu.nodes.bundle.js
-test/treeshake/index.webgpu.nodes.bundle.min.js
-test/treeshake/stats.html
-test/e2e/chromium
-test/e2e/output-screenshots
+MathTrauma.github.io/unit/build
+MathTrauma.github.io/treeshake/index-src.bundle.min.js
+MathTrauma.github.io/treeshake/index.bundle.js
+MathTrauma.github.io/treeshake/index.bundle.min.js
+MathTrauma.github.io/treeshake/index.webgpu.bundle.js
+MathTrauma.github.io/treeshake/index.webgpu.bundle.min.js
+MathTrauma.github.io/treeshake/index.webgpu.nodes.bundle.js
+MathTrauma.github.io/treeshake/index.webgpu.nodes.bundle.min.js
+MathTrauma.github.io/treeshake/stats.html
+MathTrauma.github.io/e2e/chromium
+MathTrauma.github.io/e2e/output-screenshots
 
 
 **/dist

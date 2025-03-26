@@ -142,7 +142,7 @@ loader.load(
 	} 
 );
 
-
+//test!
 const geometry = new THREE.ConeGeometry( 1, 2, 8 );
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const cone = new THREE.Mesh( geometry, material );
