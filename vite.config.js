@@ -1,7 +1,6 @@
-/**
- * @type {import('vite').UserConfig}
- */
+import glsl from "vite-plugin-glsl";
+import { defineConfig } from "vite";
 
-export default {
-    
-}
+export default defineConfig({
+  plugins: [glsl()],
+});
