@@ -1,8 +1,8 @@
-# 💜 수아's Award-Winning Room Folio 💜
+# 💜 MathTrauma 💜
 
-**[Live site](http://sooahs-room-folio.com/)**
+**[Live site](http://MathTrauma.github.io/)**
 
-This repo contains code of 수아's Room Folio. If you're interested, learn how to create a porfolio like this [here](https://youtu.be/AB6sulUMRGE)!! It's beginner friendly!
+MathTrauma's Room [here](https://youtu.be/)!! It's beginner friendly!
 
 ![Page screenshot](public/media/og-image.webp?raw=true "Page screenshot")
 
