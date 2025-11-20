@@ -3,6 +3,8 @@ import path from "path";
 import { marked } from "marked";
 
 const POST_DIR = "posts";
+const OUTPUT_DIR = "dist";
+
 const CATEGORIES = ["unity", "visualized-math", "algorithm", "analysis", "complex", "geometry"];
 const TEMPLATE_HEADER = fs.readFileSync("templates/header.html", "utf-8");
 const TEMPLATE_FOOTER = fs.readFileSync("templates/footer.html", "utf-8");
@@ -37,7 +39,7 @@ function slugify(text) {
 
 function renderCategory(category) {
     const srcFolder = path.join(POST_DIR, category);
-    const outFolder = category;
+    const outFolder = path.join(OUTPUT_DIR, category);
 
     // 1) 출력 폴더 자동 생성
     ensureDir(outFolder);
