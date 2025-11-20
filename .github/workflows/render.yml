@@ -23,6 +23,12 @@ jobs:
     - name: Run render script
       run: node render.mjs
 
+    - name: Copy static files to dist
+      run: |
+        cp index.html dist/
+        cp trauma.css dist/
+        cp .nojekyll dist/
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
