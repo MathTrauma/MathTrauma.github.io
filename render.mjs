@@ -41,10 +41,10 @@ function renderCategory(category) {
     const srcFolder = path.join(POST_DIR, category);
     const outFolder = path.join(OUTPUT_DIR, category);
 
-    // 1) 출력 폴더 자동 생성
+    // 출력 폴더 자동 생성
     ensureDir(outFolder);
 
-    // 2) posts/{category} 폴더 자동 생성
+    // posts/{category} 자동 생성
     ensureDir(srcFolder);
 
     const files = fs.readdirSync(srcFolder).filter(f => f.endsWith(".md"));
@@ -63,7 +63,6 @@ function renderCategory(category) {
         
         const title = extractTitle(markdown);
         const slug = `${slugify(title)}-${Date.now()}`; 
-
         const htmlBody = marked(markdown);
 
         const output = `
@@ -83,7 +82,7 @@ ${TEMPLATE_FOOTER}
         posts.push({ title, slug });
     }
 
-    // build category index.html
+    // category index
     let indexHtml = `
 ${TEMPLATE_HEADER}
 <main class="blog-container">
@@ -108,10 +107,36 @@ ${TEMPLATE_FOOTER}
     fs.writeFileSync(path.join(outFolder, "index.html"), indexHtml, "utf-8");
 }
 
+
+// ★ dist/ 루트에 index.html 생성 — GitHub Pages 404 해결 핵심
+function buildRootIndex() {
+    ensureDir(OUTPUT_DIR);
+
+    const html = `
+${TEMPLATE_HEADER}
+<main class="blog-container">
+<h1>MathTrauma Blog</h1>
+<ul>
+${CATEGORIES.map(c => `<li><a href="${c}/index.html">${c}</a></li>`).join("")}
+</ul>
+</main>
+${TEMPLATE_FOOTER}
+`;
+
+    fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), html, "utf-8");
+}
+
+
 function main() {
+    ensureDir(OUTPUT_DIR);
+
     for (const category of CATEGORIES) {
         renderCategory(category);
     }
+
+    // ★ 루트 index.html 생성
+    buildRootIndex();
+
     console.log("Rendering complete.");
 }
 
