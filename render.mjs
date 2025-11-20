@@ -37,6 +37,20 @@ function slugify(text) {
     return encodeURIComponent(text.toLowerCase().replace(/\s+/g, "-"));
 }
 
+// ★ trauma.css 를 dist 루트로 복사
+function copyAssets() {
+    ensureDir(OUTPUT_DIR);
+    const cssSrc = "trauma.css";
+    const cssDest = path.join(OUTPUT_DIR, "trauma.css");
+
+    if (fs.existsSync(cssSrc)) {
+        fs.copyFileSync(cssSrc, cssDest);
+        console.log("Copied trauma.css to dist/");
+    } else {
+        console.warn("trauma.css not found in project root.");
+    }
+}
+
 function renderCategory(category) {
     const srcFolder = path.join(POST_DIR, category);
     const outFolder = path.join(OUTPUT_DIR, category);
@@ -129,6 +143,8 @@ ${TEMPLATE_FOOTER}
 
 function main() {
     ensureDir(OUTPUT_DIR);
+
+    copyAssets();
 
     for (const category of CATEGORIES) {
         renderCategory(category);
