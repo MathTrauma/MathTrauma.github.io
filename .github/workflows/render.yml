@@ -18,12 +18,10 @@ jobs:
         cache: 'npm'
 
     - name: Install Dependencies
-      run: npm ci
+      run: npm install marked
 
-    - name: Generate Blog
-      run: |
-        echo "Building custom blog..."
-        npm run build
+    - name: Run render script
+      run: node render.mjs
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
