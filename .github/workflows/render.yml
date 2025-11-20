@@ -11,15 +11,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
     - name: Generate Blog
       run: |
-        echo "Running custom render step"
-        # Your rendering script goes here
+        echo "Building custom blog..."
+        npm run build
 
-    - name: Deploy to GitHub Pages
+    - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: .
+        path: ./dist
 
   deploy:
     needs: build
@@ -27,6 +36,10 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
