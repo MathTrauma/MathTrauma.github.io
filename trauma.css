@@ -322,6 +322,39 @@ footer {
     padding: 2rem;
 }
 
+.blog-page {
+    background: #f5f6fa;
+    color: #333;
+}
+
+.blog-header {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: #667eea;
+    color: white;
+}
+
+.blog-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.blog-post {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post .date {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+}
+
+
 /* Animations */
 @keyframes fadeInUp {
     from {
