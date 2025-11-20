@@ -37,7 +37,18 @@ function slugify(text) {
     return encodeURIComponent(text.toLowerCase().replace(/\s+/g, "-"));
 }
 
-// ★ trauma.css 를 dist 루트로 복사
+// ★ marked 설정 — Prism.js 코드블록 처리를 위함
+marked.setOptions({
+    gfm: true,
+    breaks: true,
+    langPrefix: "language-",
+    highlight: function(code, lang) {
+        // Prism이 직접 하이라이트하므로 여기서는 변형하지 않는다.
+        return code;
+    }
+});
+
+// ★ trauma.css 복사
 function copyAssets() {
     ensureDir(OUTPUT_DIR);
     const cssSrc = "trauma.css";
@@ -55,10 +66,7 @@ function renderCategory(category) {
     const srcFolder = path.join(POST_DIR, category);
     const outFolder = path.join(OUTPUT_DIR, category);
 
-    // 출력 폴더 자동 생성
     ensureDir(outFolder);
-
-    // posts/{category} 자동 생성
     ensureDir(srcFolder);
 
     const files = fs.readdirSync(srcFolder).filter(f => f.endsWith(".md"));
@@ -74,9 +82,9 @@ function renderCategory(category) {
             console.error(`Failed to process ${file}:`, err.message);
             continue;
         }
-        
+
         const title = extractTitle(markdown);
-        const slug = `${slugify(title)}-${Date.now()}`; 
+        const slug = `${slugify(title)}-${Date.now()}`;
         const htmlBody = marked(markdown);
 
         const output = `
@@ -122,7 +130,7 @@ ${TEMPLATE_FOOTER}
 }
 
 
-// ★ dist/ 루트에 index.html 생성 — GitHub Pages 404 해결 핵심
+// dist/index.html
 function buildRootIndex() {
     ensureDir(OUTPUT_DIR);
 
@@ -140,7 +148,6 @@ ${TEMPLATE_FOOTER}
     fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), html, "utf-8");
 }
 
-
 function main() {
     ensureDir(OUTPUT_DIR);
 
@@ -150,7 +157,6 @@ function main() {
         renderCategory(category);
     }
 
-    // ★ 루트 index.html 생성
     buildRootIndex();
 
     console.log("Rendering complete.");
