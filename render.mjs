@@ -26,8 +26,9 @@ function escapeHtml(text) {
 function extractTitle(markdown) {
     const lines = markdown.split("\n");
     for (const line of lines) {
-        if (line.startsWith("# ")) {
-            return line.replace("# ", "").trim();
+        const match = line.match(/^#\s*(.+)/);
+        if (match) {
+            return match[1].trim();
         }
     }
     return "Untitled";
