@@ -32,6 +32,18 @@ body {
     object-fit: cover;
 }
 
+.video-background iframe {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
 /* 비디오 위 오버레이 */
 .video-overlay {
     position: fixed;
