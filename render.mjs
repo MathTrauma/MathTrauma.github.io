@@ -150,7 +150,6 @@ ${TEMPLATE_FOOTER}
 
 function main() {
     ensureDir(OUTPUT_DIR);
-
     copyAssets();
 
     for (const category of CATEGORIES) {
@@ -158,7 +157,6 @@ function main() {
     }
 
     buildRootIndex();
-
     console.log("Rendering complete.");
 }
 
