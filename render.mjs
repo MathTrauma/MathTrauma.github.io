@@ -51,7 +51,7 @@ marked.setOptions({
 
 // ★ trauma.css 복사
 function copyAssets() {
-    ensureDir(OUTPUT_DIR);
+    //ensureDir(OUTPUT_DIR);
     const cssSrc = "trauma.css";
     const cssDest = path.join(OUTPUT_DIR, "trauma.css");
 
