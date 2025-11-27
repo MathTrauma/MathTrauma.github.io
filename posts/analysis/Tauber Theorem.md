@@ -1,4 +1,4 @@
-#Tauber Theorem
+# Tauber Theorem
 
 0을 기준으로 하는 멱급수 $$ \sum_{n=0}^\infty a_n x^n $$ 가 수렴하는 $x=x_0(\not=0)$가 존재한다고 하자. 어떤 $N$에 대하여 $n \ge N \rightarrow |a_n x_0^n| <1$이어야 한다. 이 때, $ |x| < x_0 $인 임의의 $x$에 대해서 $$\sum_{n=N}^\infty |a_n x^n|<\sum_{n=N}^\infty |a_n x_0^n| \left| \frac{x}{x_0} \right|^n < \sum_{n=N}^\infty \left| \frac{x}{x_0} \right|^n $$ 을 얻을 수 있다. 이제 멱급수는 0이 아닌한 점에서 수렴하면 이 멱급수는 0을 포함하는 어떤 구간에서 절대수렴한다고 말할 수 있다. 더 나아가 적당한 등비급수보다 작다. 이 적당한(?) 등비급수가 비교의 유용한 기준이 된다. 이를 명심하고 다음의 문제들을 해결하라.
 열린구간 $(-a, a)$에서 $f(x) = \sum_{n=0}^\infty a_n x^n = 0$이면 임의의 $n$에 대해 $a_n = 0$임을 보여라.
