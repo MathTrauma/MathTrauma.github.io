@@ -5,6 +5,10 @@ import { marked } from "marked";
 const POST_DIR = "posts";
 const OUTPUT_DIR = "dist";
 
+// GitHub Pages 빌드를 위한 .nojekyll 파일 경로
+const noJekyllSrc = ".nojekyll";
+const noJekyllDest = path.join(OUTPUT_DIR, ".nojekyll");
+
 const CATEGORIES = ["unity", "Problems%20And%20Solutions", "algorithm", "analysis", "complex", "geometry"];
 const TEMPLATE_HEADER = fs.readFileSync("templates/header.html", "utf-8");
 const TEMPLATE_FOOTER = fs.readFileSync("templates/footer.html", "utf-8");

@@ -1,0 +1,52 @@
+디렉토리 구조:
+
+📁 /Users/mathtrauma/_Web/MathTrauma.github.io
+├── 📁 .github
+│   ├── 📁 workflows
+│   │   ├── 📄 activation.yml
+│   │   └── 📄 render.yml
+│   └── 📄 .DS_Store
+├── 📁 .vscode
+│   └── 📄 settings.json
+├── 📁 algorithm
+│   └── 📄 index.html
+├── 📁 analysis
+│   └── 📄 index.html
+├── 📁 complex
+│   └── 📄 index.html
+├── 📁 dist
+│   └── 📄 trauma.css
+├── 📁 geometry
+│   └── 📄 index.html
+├── 📁 posts
+│   ├── 📁 algorithm
+│   │   ├── 📄 BOJ1445.md
+│   │   ├── 📄 container.md
+│   │   └── 📄 열혈강호3.md
+│   ├── 📁 analysis
+│   │   ├── 📄 first.md
+│   │   ├── 📄 StirlingNumber.md
+│   │   └── 📄 Tauber Theorem.md
+│   ├── 📁 complex
+│   ├── 📁 geometry
+│   ├── 📁 unity
+│   └── 📁 visualized-math
+├── 📁 templates
+│   ├── 📄 footer.html
+│   └── 📄 header.html
+├── 📁 unity
+│   └── 📄 index.html
+├── 📁 visualized-math
+│   └── 📄 index.html
+├── 📄 .DS_Store
+├── 📄 .gitignore
+├── 📄 .nojekyll
+├── 📄 directory_tree.txt
+├── 📄 index.html
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 render.mjs
+├── 📄 show_tree.py
+├── 📄 trauma.css
+└── 📄 trauma_.css
+
