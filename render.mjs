@@ -71,6 +71,14 @@ function copyAssets() {
     } else {
         console.warn("trauma.css not found in project root.");
     }
+
+    if (fs.existsSync(noJekyllSrc)) {
+        if (!fs.existsSync(noJekyllDest) ||
+            fs.statSync(noJekyllSrc).mtime > fs.statSync(noJekyllDest).mtime) {
+            fs.copyFileSync(noJekyllSrc, noJekyllDest);
+            console.log("Copied .nojekyll to dist/");
+        }
+    }
 }
 
 function renderCategory(category, forceRebuild = false) {
