@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,134 @@
     <link rel="stylesheet" href="/trauma.css">
 </head>
 
-<body class="blog-page">
-    <header class="blog-header">
-        <h1>Analysis</h1>
-        <p>해석학 정리 노트</p>
-    </header>
+<body class="blog-shell">
+    <div class="site-frame">
+        <header class="top-nav">
+            <div class="nav-inner">
+                <a class="brand" href="/">MathTrauma</a>
+                <nav class="nav-links">
+                    <a href="/algorithm/">Algorithm</a>
+                    <a href="/analysis/">Analysis</a>
+                    <a href="/complex/">Complex</a>
+                    <a href="/geometry/">Geometry</a>
+                </nav>
+                <div class="nav-actions">
+                    <span class="badge">🧊 해석학</span>
+                    <a class="ghost-btn" href="#latest">목차</a>
+                </div>
+            </div>
+        </header>
 
-    <main class="blog-container">
-        <article class="blog-post">
-        <h2>첫 글</h2>
-        <p class="date">2025-01-20</p>
-        <p>여기에 글을 추가하세요.</p>
-        </article>
-    </main>
+        <section class="hero-band">
+            <div class="hero-grid">
+                <div>
+                    <p class="eyebrow">Study Log</p>
+                    <h1 class="hero-title">Mathematical Analysis</h1>
+                    <p class="hero-lede">공리에서 출발해 극한·연속·미분·적분을 다시 쌓아 올리는 과정, 엄밀한 증명 흐름을 기록합니다.</p>
+                    <div class="hero-meta">
+                        <span class="chip">최근 업데이트 · 2025-01-20</span>
+                        <span class="chip">증명 중심 · Self-contained</span>
+                        <span class="chip">읽기 난이도 · ⭐️⭐️⭐️</span>
+                    </div>
+                </div>
+                <div class="hero-panel">
+                    <strong>읽는 법</strong>
+                    <p>본문은 공리·정의·정리 사이의 연결 고리를 드러내고, 각 섹션별 핵심 직관과 반례를 함께 담았습니다.</p>
+                    <div class="hero-actions">
+                        <a class="ghost-btn" href="#filters">태그별 보기</a>
+                        <a class="ghost-btn" href="#latest">본문으로</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-    <p>&copy; 2025 MathTrauma. All rights reserved.</p>
-    </footer>
+        <main class="page-grid" id="latest">
+            <section class="post-feed">
+                <div class="filter-bar" id="filters">
+                    <div class="filter-group">
+                        <span class="chip">전체</span>
+                        <span class="chip">공리</span>
+                        <span class="chip">연속성</span>
+                        <span class="chip">미분</span>
+                    </div>
+                    <span class="search-pill">증명 흐름 / 키워드로 검색</span>
+                </div>
+
+                <div class="card-grid">
+                    <article class="post-card">
+                        <div class="card-kicker">입문 · 공리</div>
+                        <h3><a href="/posts/analysis/rigorous-proof.html">Rigorous Proof의 자세와 공리 읽기</a></h3>
+                        <p class="card-excerpt">해석학에서 요구하는 self-contained 증명, 공리·정의가 왜 증명 대상이 아닌지 사례로 정리했습니다.</p>
+                        <div class="card-meta">
+                            <span>2025-01-20</span>
+                            <span>읽기 12분</span>
+                        </div>
+                        <div class="tag-row">
+                            <span class="tag">Axiom</span>
+                            <span class="tag">Proof</span>
+                            <span class="tag">Completeness</span>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="card-kicker">극한 · 연속</div>
+                        <h3><a href="#">ε-δ 정의로 다시 보는 직관</a></h3>
+                        <p class="card-excerpt">한계값을 둘러싼 흔한 오해, 직관적 그림과 형식 정의를 번갈아 배치해 확인합니다.</p>
+                        <div class="card-meta">
+                            <span>2025-01-20</span>
+                            <span>읽기 10분</span>
+                        </div>
+                        <div class="tag-row">
+                            <span class="tag">Limit</span>
+                            <span class="tag">Continuity</span>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="card-kicker">미분</div>
+                        <h3><a href="#">평균값정리의 역할과 활용</a></h3>
+                        <p class="card-excerpt">엄밀한 증명 없이 자주 쓰이는 직관을 평균값정리로 교체하는 방법과 예시를 모았습니다.</p>
+                        <div class="card-meta">
+                            <span>2025-01-20</span>
+                            <span>읽기 7분</span>
+                        </div>
+                        <div class="tag-row">
+                            <span class="tag">Differentiation</span>
+                            <span class="tag">MVT</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <div class="panel">
+                    <h4>이 블로그는</h4>
+                    <p>공리부터 적분까지 이어지는 해석학 여정을 단계별로 분해해, 읽는 순서와 필요한 선행지식을 명시합니다.</p>
+                    <ul class="bullet-list">
+                        <li>섹션별 정의/정리/증명/예제 네 구획</li>
+                        <li>읽기 시간, 난이도, 선행 참고 링크</li>
+                        <li>반례와 직관 그림을 함께 제공</li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <h4>추천 묶음</h4>
+                    <ul>
+                        <li><a href="#">완비성과 최소상계 정리</a></li>
+                        <li><a href="#">연속함수의 극값정리</a></li>
+                        <li><a href="#">적분 가능성의 기준들</a></li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <h4>피드백</h4>
+                    <p class="muted">오탈자, 다른 증명 아이디어는 댓글/이슈로 알려주세요.</p>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 MathTrauma. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
+
 </html>
