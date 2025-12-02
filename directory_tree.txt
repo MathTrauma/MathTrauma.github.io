@@ -38,7 +38,6 @@
 │       └── 📄 empty.md
 ├── 📁 scripts
 │   ├── 📄 main.js
-│   ├── 📄 render.mjs
 │   └── 📄 threejsApp.js
 ├── 📁 templates
 │   ├── 📄 footer.html
@@ -54,6 +53,7 @@
 ├── 📄 index.html
 ├── 📄 package-lock.json
 ├── 📄 package.json
+├── 📄 render.mjs
 ├── 📄 show_tree.py
 └── 📄 trauma.css
 
