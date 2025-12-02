@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-def show_tree(directory='.', prefix='', is_last=True, output_file=None):
+def show_tree(directory='.', prefix='', output_file=None):
     """
     디렉토리 구조를 트리 형태로 출력하거나 파일에 저장합니다.
     
@@ -43,7 +43,7 @@ def show_tree(directory='.', prefix='', is_last=True, output_file=None):
             if item.is_dir():
                 # 다음 레벨의 접두사 설정
                 extension = '    ' if is_last_item else '│   '
-                show_tree(item, prefix + extension, is_last_item, output_file)
+                show_tree(item, prefix + extension, output_file)
                 
     except PermissionError:
         write_line(f"{prefix}    [접근 권한 없음]")
@@ -51,7 +51,6 @@ def show_tree(directory='.', prefix='', is_last=True, output_file=None):
 def save_tree_to_file(directory='.', output_filename='directory_tree.txt'):
     """
     디렉토리 구조를 파일로 저장합니다.
-    
     Args:
         directory: 탐색할 디렉토리 경로
         output_filename: 저장할 파일 이름
