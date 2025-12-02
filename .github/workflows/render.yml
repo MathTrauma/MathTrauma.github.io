@@ -37,7 +37,7 @@ jobs:
         cp index.html dist/
         cp trauma.css dist/
         cp .nojekyll dist/
-        cp -r scripts
+        cp -r scripts dist/
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
