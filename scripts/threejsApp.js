@@ -4,12 +4,7 @@ export class VoxelWorld {
   constructor(container) {
     this.container = container;
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
+    this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000 );
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
@@ -35,7 +30,7 @@ export class VoxelWorld {
 
     // 2. Scene
     this.scene.background = new THREE.Color('#111827');
-    this.scene.fog = new THREE.Fog('#111827', 10, 50);
+    this.scene.fog = new THREE.Fog('#a1b8b7', 10, 50);
 
     // 3. Camera
     this.camera.position.set(0, 5, 15);
@@ -70,10 +65,12 @@ export class VoxelWorld {
 
   createObjects() {
     const configs = [
+      { id: 'problems', type: 'problem', position: [4, 0, 5], url: 'https://www.youtube.com/', label: 'Problems' },
+      { id: 'tools', type: 'tool', position: [4, 0, 5], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
       { id: 'math', type: 'math', position: [-4, 0, 0], url: 'https://www.wolframalpha.com/', label: 'Math' },
       { id: 'computer', type: 'computer', position: [-1.5, 0, 2], url: 'https://github.com/', label: 'Computer' },
       { id: 'game', type: 'game', position: [1.5, 0, 2], url: 'https://store.steampowered.com/', label: 'Game' },
-      { id: 'youtube', type: 'youtube', position: [4, 0, 0], url: 'https://www.youtube.com/', label: 'YouTube' }
+      { id: 'youtube', type: 'youtube', position: [4, 0, 0], url: 'https://www.youtube.com/', label: 'YouTube' },
     ];
 
     configs.forEach(config => {
@@ -173,6 +170,31 @@ export class VoxelWorld {
             }
           }
           voxels.push({ x, y: y + 1, z: 0, color });
+        }
+      }
+    }
+
+    if (type === 'tool') {
+      baseColor = '#64748b'; // 회색 금속 느낌
+      const handleColor = '#475569'; // 어두운 회색
+
+      // 렌치 헤드 (상단 조절 부분)
+      for (let x = -2; x <= 2; x++) {
+        voxels.push({ x, y: 5, z: 0, color: baseColor });
+      }
+      
+      // 렌치 헤드 개구부
+      voxels.push({ x: -1, y: 4, z: 0, color: baseColor });
+      voxels.push({ x: 1, y: 4, z: 0, color: baseColor });
+      
+      // 렌치 목 부분
+      voxels.push({ x: 0, y: 4, z: 0, color: handleColor });
+      voxels.push({ x: 0, y: 3, z: 0, color: handleColor });
+      
+      // 렌치 손잡이
+      for (let y = 1; y <= 2; y++) {
+        for (let x = -1; x <= 1; x++) {
+          voxels.push({ x, y, z: 0, color: handleColor });
         }
       }
     }
