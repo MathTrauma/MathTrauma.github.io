@@ -9,7 +9,21 @@ const OUTPUT_DIR = "dist";
 const noJekyllSrc = ".nojekyll";
 const noJekyllDest = path.join(OUTPUT_DIR, ".nojekyll");
 
-const CATEGORIES = ["unity", "Problems%20And%20Solutions", "algorithm", "analysis", "complex", "geometry"];
+// posts 폴더에서 동적으로 카테고리 목록 생성
+function getCategories() {
+    if (!fs.existsSync(POST_DIR)) {
+        console.warn(`⚠️  Posts directory not found: ${POST_DIR}`);
+        return [];
+    }
+    
+    return fs.readdirSync(POST_DIR, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name)
+        .filter(name => !name.startsWith('.')); // 숨김 폴더 제외
+}
+
+const CATEGORIES = getCategories();
+console.log(`📂 발견된 카테고리 (${CATEGORIES.length}개):`, CATEGORIES);
 const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : `
 <!DOCTYPE html>
 <html lang="ko">
@@ -25,7 +39,10 @@ const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync
         <div class="nav-inner">
             <a href="/" class="brand">MathTrauma</a>
             <div class="nav-links">
-                ${CATEGORIES.map(c => `<a href="/${c}/index.html">${decodeURIComponent(c)}</a>`).join('')}
+                ${CATEGORIES.map(c => {
+                    const encodedPath = encodeURIComponent(c);
+                    return `<a href="/${encodedPath}/index.html">${c}</a>`;
+                }).join('')}
             </div>
         </div>
     </nav>
@@ -277,7 +294,10 @@ ${TEMPLATE_HEADER}
         <div class="panel">
             <h4>카테고리</h4>
             <ul class="bullet-list">
-                ${CATEGORIES.map(c => `<li><a href="/${c}/index.html">${decodeURIComponent(c)}</a></li>`).join('')}
+                ${CATEGORIES.map(c => {
+                    const encodedPath = encodeURIComponent(c);
+                    return `<li><a href="/${encodedPath}/index.html">${c}</a></li>`;
+                }).join('')}
             </ul>
         </div>
     </aside>
@@ -310,13 +330,16 @@ ${TEMPLATE_HEADER}
 <div class="page-grid">
     <main class="post-feed">
         <div class="card-grid">
-            ${CATEGORIES.map(c => `
-                <a href="${c}/index.html" class="post-card">
+            ${CATEGORIES.map(c => {
+                const encodedPath = encodeURIComponent(c);
+                return `
+                <a href="${encodedPath}/index.html" class="post-card">
                     <div class="card-kicker">카테고리</div>
-                    <h3>${decodeURIComponent(c)}</h3>
+                    <h3>${c}</h3>
                     <p class="card-excerpt">포스트 보러가기 →</p>
                 </a>
-            `).join('')}
+                `;
+            }).join('')}
         </div>
     </main>
     
