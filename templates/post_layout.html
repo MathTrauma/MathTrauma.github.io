@@ -1,0 +1,23 @@
+<!-- templates/post_layout.html -->
+<div class="article-shell">
+    <aside class="toc">
+        <h4>목차</h4>
+        <ul>
+            <li><a href="#top">맨 위로</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <article class="article-body">
+            <h1>{{TITLE}}</h1>
+            {{CONTENT_BODY}}
+        </article>
+    </main>
+
+    <aside class="article-aside">
+        <div class="panel">
+            <h4>카테고리</h4>
+            <p><a href="index.html">← {{CATEGORY_NAME}}</a></p>
+        </div>
+    </aside>
+</div>
