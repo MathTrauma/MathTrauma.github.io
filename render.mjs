@@ -10,7 +10,7 @@ const noJekyllSrc = ".nojekyll";
 const noJekyllDest = path.join(OUTPUT_DIR, ".nojekyll");
 
 const CATEGORIES = ["unity", "Problems%20And%20Solutions", "algorithm", "analysis", "complex", "geometry"];
-const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : "<html><body>"; // 파일 유무 체크 추가
+const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : "<html><body>";
 const TEMPLATE_FOOTER = fs.existsSync("templates/footer.html") ? fs.readFileSync("templates/footer.html", "utf-8") : "</body></html>";
 
 function ensureDir(dir) {
@@ -25,39 +25,48 @@ function escapeHtml(text) {
         .replace(/"/g, "&quot;");
 }
 
-function extractTitle(markdown) {
-    const lines = markdown.split("\n");
-    for (const line of lines) {
-        // # 뒤에 텍스트가 있는 경우 추출
-        const match = line.match(/^#\s+(.+)/);
-        if (match) {
-            return match[1].trim();
+function extractTitle(content, isMarkdown = true) {
+    if (isMarkdown) {
+        const lines = content.split("\n");
+        for (const line of lines) {
+            const match = line.match(/^#\s+(.+)/);
+            if (match) {
+                return match[1].trim();
+            }
+        }
+    } else {
+        // HTML에서 <h1> 태그로 제목 추출
+        const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+        if (h1Match) {
+            return h1Match[1].replace(/<[^>]+>/g, '').trim();
+        }
+        // <title> 태그에서 추출
+        const titleMatch = content.match(/<title[^>]*>(.*?)<\/title>/i);
+        if (titleMatch) {
+            return titleMatch[1].trim();
         }
     }
     return "Untitled";
 }
 
 function slugify(text) {
-    // 한글 제목도 안전하게 파일명으로 쓰기 위해 영문/숫자 외에는 제거하거나 인코딩 필요
-    // 여기서는 간단하게 공백만 대시로 바꾸고 소문자화 (한글은 그대로 유지됨)
     return text.toLowerCase().trim().replace(/\s+/g, "-");
 }
 
 // 파일 수정 시간 비교 함수
-function needsRebuild(mdPath, htmlPath) {
+function needsRebuild(srcPath, htmlPath) {
     if (!fs.existsSync(htmlPath)) return true;
     
-    const mdTime = fs.statSync(mdPath).mtime;
+    const srcTime = fs.statSync(srcPath).mtime;
     const htmlTime = fs.statSync(htmlPath).mtime;
     
-    return mdTime > htmlTime;
+    return srcTime > htmlTime;
 }
 
-// ★ marked 설정
+// marked 설정
 marked.setOptions({
     gfm: true,
     breaks: true,
-    // langPrefix는 최신 버전에서 동작 방식이 다를 수 있으나 유지
 });
 
 function copyAssets() {
@@ -65,7 +74,6 @@ function copyAssets() {
     const cssDest = path.join(OUTPUT_DIR, "trauma.css");
 
     if (fs.existsSync(cssSrc)) {
-        // CSS가 변경되었거나 타겟 파일이 없으면 복사
         if (!fs.existsSync(cssDest) || 
             fs.statSync(cssSrc).mtime > fs.statSync(cssDest).mtime) {
             fs.copyFileSync(cssSrc, cssDest);
@@ -84,13 +92,9 @@ function copyAssets() {
 }
 
 function renderCategory(categoryRaw, forceRebuild = false) {
-    // [수정됨] URL 인코딩된 카테고리명(%20)을 실제 폴더명(공백)으로 변환
     const categoryFolderName = decodeURIComponent(categoryRaw);
     
     const srcFolder = path.join(POST_DIR, categoryFolderName);
-    // 출력 폴더는 URL 구조를 위해 인코딩된 이름 그대로 사용해도 되고, 디코딩된 이름을 써도 됨.
-    // 웹 표준을 위해 폴더명은 공백이 없는 것이 좋으므로 raw(encoded) 값을 사용하거나 slugify 추천.
-    // 여기서는 기존 로직 유지를 위해 categoryRaw 사용
     const outFolder = path.join(OUTPUT_DIR, categoryRaw);
 
     ensureDir(outFolder);
@@ -100,47 +104,53 @@ function renderCategory(categoryRaw, forceRebuild = false) {
         return;
     }
 
-    const files = fs.readdirSync(srcFolder).filter(f => f.endsWith(".md"));
+    // .md와 .html 파일 모두 처리 (index.html 제외)
+    const allFiles = fs.readdirSync(srcFolder);
+    console.log(`📂 ${categoryFolderName} 폴더의 모든 파일:`, allFiles);
+    
+    const files = allFiles.filter(f => {
+        const isTargetFile = (f.endsWith(".md") || f.endsWith(".html"));
+        const isNotIndex = f !== "index.html"; // index.html은 카테고리 인덱스와 충돌 방지
+        return isTargetFile && isNotIndex;
+    });
+    console.log(`📝 처리할 파일 (${files.length}개):`, files);
+    
     const posts = [];
     let rebuiltCount = 0;
 
     for (const file of files) {
-        const mdPath = path.join(srcFolder, file);
+        const srcPath = path.join(srcFolder, file);
+        const isMarkdown = file.endsWith(".md");
 
-        let markdown = "";
+        let content = "";
         try {
-            markdown = fs.readFileSync(mdPath, "utf-8");
+            content = fs.readFileSync(srcPath, "utf-8");
         } catch (err) {
             console.error(`Failed to process ${file}:`, err.message);
             continue;
         }
 
-        const title = extractTitle(markdown);
-        
-        // [수정됨] Date.now() 제거 -> 파일명 고정
-        // 한글 제목 파일명 문제를 피하려면 encodeURIComponent 사용
-        const slug = slugify(title); 
-        
-        // 파일명이 겹칠 경우를 대비해 원본 파일명도 활용 가능하지만, 일단 제목 기반으로 생성
+        const title = extractTitle(content, isMarkdown);
+        const slug = slugify(title);
         const outPath = path.join(outFolder, `${slug}.html`);
 
         // 증분 빌드 체크
-        if (!forceRebuild && !needsRebuild(mdPath, outPath)) {
-            // console.log(`⏭️  Skipping ${file}`); // 로그 너무 많으면 주석 처리
+        if (!forceRebuild && !needsRebuild(srcPath, outPath)) {
             posts.push({ title, slug });
             continue;
         }
 
-        // [수정됨] marked() -> marked.parse() 로 변경 (최신 버전 호환)
         let htmlBody = "";
-        try {
-             htmlBody = marked.parse(markdown);
-        } catch (e) {
-             // 구버전 marked일 경우 fallback
-             htmlBody = marked(markdown);
-        }
+        
+        if (isMarkdown) {
+            // Markdown 파일 처리
+            try {
+                htmlBody = marked.parse(content);
+            } catch (e) {
+                htmlBody = marked(content);
+            }
 
-        const output = `
+            const output = `
 ${TEMPLATE_HEADER}
 <main class="blog-container">
 <article class="blog-post">
@@ -150,8 +160,27 @@ ${htmlBody}
 </main>
 ${TEMPLATE_FOOTER}
 `;
+            fs.writeFileSync(outPath, output, "utf-8");
+        } else {
+            // HTML 파일 처리
+            // 이미 완전한 HTML 문서인 경우 그대로 복사
+            if (content.includes('<!DOCTYPE') || content.includes('<html')) {
+                fs.writeFileSync(outPath, content, "utf-8");
+            } else {
+                // HTML 프래그먼트인 경우 템플릿으로 감싸기
+                const output = `
+${TEMPLATE_HEADER}
+<main class="blog-container">
+<article class="blog-post">
+${content}
+</article>
+</main>
+${TEMPLATE_FOOTER}
+`;
+                fs.writeFileSync(outPath, output, "utf-8");
+            }
+        }
 
-        fs.writeFileSync(outPath, output, "utf-8");
         rebuiltCount++;
         console.log(`✅ Rendered: ${categoryFolderName}/${file} -> ${slug}.html`);
 
@@ -187,8 +216,6 @@ ${TEMPLATE_FOOTER}
     fs.writeFileSync(path.join(outFolder, "index.html"), indexHtml, "utf-8");
 }
 
-// ... (renderSingleFile 등 나머지 함수는 동일하지만 renderCategory 호출 로직에 주의) ...
-
 function buildRootIndex() {
     ensureDir(OUTPUT_DIR);
 
@@ -221,7 +248,7 @@ function main() {
     } else {
         console.log('🚀 Starting incremental build...');
         for (const category of CATEGORIES) {
-            renderCategory(category, false); // 기본 증분 빌드
+            renderCategory(category, false);
         }
         buildRootIndex();
     }
