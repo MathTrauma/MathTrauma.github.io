@@ -24,14 +24,28 @@ function getCategories() {
 
 const CATEGORIES = getCategories();
 console.log(`📂 발견된 카테고리 (${CATEGORIES.length}개):`, CATEGORIES);
-const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : `
+// 페이지 깊이에 따라 CSS 경로를 반환하는 함수
+function getCssPath(depth = 0) {
+    if (depth === 0) return "trauma.css";
+    return "../".repeat(depth) + "trauma.css";
+}
+
+// 템플릿 헤더 생성 함수
+function getTemplateHeader(depth = 0) {
+    const cssPath = getCssPath(depth);
+    
+    if (fs.existsSync("templates/header.html")) {
+        return fs.readFileSync("templates/header.html", "utf-8");
+    }
+    
+    return `
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MathTrauma Blog</title>
-    <link rel="stylesheet" href="/trauma.css">
+    <link rel="stylesheet" href="${cssPath}">
 </head>
 <body class="blog-shell">
 <div class="site-frame">
@@ -47,6 +61,10 @@ const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync
         </div>
     </nav>
 `;
+}
+
+const TEMPLATE_HEADER = getTemplateHeader(0); // 루트용
+const TEMPLATE_HEADER_SUB = getTemplateHeader(1); // 서브 폴더용
 
 const TEMPLATE_FOOTER = fs.existsSync("templates/footer.html") ? fs.readFileSync("templates/footer.html", "utf-8") : `
     <footer class="footer">
@@ -136,10 +154,11 @@ function copyAssets() {
 }
 
 function renderCategory(categoryRaw, forceRebuild = false) {
-    const categoryFolderName = decodeURIComponent(categoryRaw);
+    // 실제 폴더명 그대로 사용
+    const categoryFolderName = categoryRaw;
     
     const srcFolder = path.join(POST_DIR, categoryFolderName);
-    const outFolder = path.join(OUTPUT_DIR, categoryRaw);
+    const outFolder = path.join(OUTPUT_DIR, categoryFolderName);
 
     ensureDir(outFolder);
     
@@ -195,7 +214,7 @@ function renderCategory(categoryRaw, forceRebuild = false) {
             }
 
             const output = `
-${TEMPLATE_HEADER}
+${TEMPLATE_HEADER_SUB}
 <div class="article-shell">
     <aside class="toc">
         <h4>목차</h4>
@@ -229,7 +248,7 @@ ${TEMPLATE_FOOTER}
             } else {
                 // HTML 프래그먼트인 경우 템플릿으로 감싸기
                 const output = `
-${TEMPLATE_HEADER}
+${TEMPLATE_HEADER_SUB}
 <main class="blog-container">
 <article class="blog-post">
 ${content}
@@ -253,7 +272,7 @@ ${TEMPLATE_FOOTER}
 
     // category index
     let indexHtml = `
-${TEMPLATE_HEADER}
+${TEMPLATE_HEADER_SUB}
 <div class="hero-band">
     <div class="hero-grid">
         <div>
