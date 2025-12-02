@@ -10,8 +10,35 @@ const noJekyllSrc = ".nojekyll";
 const noJekyllDest = path.join(OUTPUT_DIR, ".nojekyll");
 
 const CATEGORIES = ["unity", "Problems%20And%20Solutions", "algorithm", "analysis", "complex", "geometry"];
-const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : "<html><body>";
-const TEMPLATE_FOOTER = fs.existsSync("templates/footer.html") ? fs.readFileSync("templates/footer.html", "utf-8") : "</body></html>";
+const TEMPLATE_HEADER = fs.existsSync("templates/header.html") ? fs.readFileSync("templates/header.html", "utf-8") : `
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathTrauma Blog</title>
+    <link rel="stylesheet" href="/trauma.css">
+</head>
+<body class="blog-shell">
+<div class="site-frame">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="/" class="brand">MathTrauma</a>
+            <div class="nav-links">
+                ${CATEGORIES.map(c => `<a href="/${c}/index.html">${decodeURIComponent(c)}</a>`).join('')}
+            </div>
+        </div>
+    </nav>
+`;
+
+const TEMPLATE_FOOTER = fs.existsSync("templates/footer.html") ? fs.readFileSync("templates/footer.html", "utf-8") : `
+    <footer class="footer">
+        <p>&copy; 2024 MathTrauma Blog. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>
+`;
 
 function ensureDir(dir) {
     if (!fs.existsSync(dir)) { fs.mkdirSync(dir, { recursive: true }); }
@@ -152,12 +179,28 @@ function renderCategory(categoryRaw, forceRebuild = false) {
 
             const output = `
 ${TEMPLATE_HEADER}
-<main class="blog-container">
-<article class="blog-post">
-<h1>${escapeHtml(title)}</h1>
-${htmlBody}
-</article>
-</main>
+<div class="article-shell">
+    <aside class="toc">
+        <h4>목차</h4>
+        <ul>
+            <li><a href="#top">맨 위로</a></li>
+        </ul>
+    </aside>
+    
+    <main>
+        <article class="article-body">
+            <h1>${escapeHtml(title)}</h1>
+            ${htmlBody}
+        </article>
+    </main>
+    
+    <aside class="article-aside">
+        <div class="panel">
+            <h4>카테고리</h4>
+            <p><a href="index.html">← ${categoryFolderName}</a></p>
+        </div>
+    </aside>
+</div>
 ${TEMPLATE_FOOTER}
 `;
             fs.writeFileSync(outPath, output, "utf-8");
@@ -194,22 +237,51 @@ ${TEMPLATE_FOOTER}
     // category index
     let indexHtml = `
 ${TEMPLATE_HEADER}
-<main class="blog-container">
-<h1>${categoryFolderName.toUpperCase()}</h1>
-<ul>
+<div class="hero-band">
+    <div class="hero-grid">
+        <div>
+            <div class="eyebrow">카테고리</div>
+            <h1 class="hero-title">${categoryFolderName}</h1>
+            <p class="hero-lede">총 ${posts.length}개의 포스트</p>
+        </div>
+    </div>
+</div>
+
+<div class="page-grid">
+    <main class="post-feed">
+        <div class="card-grid">
 `;
 
     if (posts.length === 0) {
-        indexHtml += `<li>게시물이 없습니다.</li>`;
+        indexHtml += `
+            <div class="panel">
+                <p>아직 게시물이 없습니다.</p>
+            </div>
+        `;
     } else {
         for (const post of posts) {
-            indexHtml += `<li><a href="${post.slug}.html">${post.title}</a></li>`;
+            indexHtml += `
+            <a href="${post.slug}.html" class="post-card">
+                <div class="card-kicker">${categoryFolderName}</div>
+                <h3>${escapeHtml(post.title)}</h3>
+            </a>
+            `;
         }
     }
 
     indexHtml += `
-</ul>
-</main>
+        </div>
+    </main>
+    
+    <aside class="sidebar">
+        <div class="panel">
+            <h4>카테고리</h4>
+            <ul class="bullet-list">
+                ${CATEGORIES.map(c => `<li><a href="/${c}/index.html">${decodeURIComponent(c)}</a></li>`).join('')}
+            </ul>
+        </div>
+    </aside>
+</div>
 ${TEMPLATE_FOOTER}
 `;
 
@@ -221,12 +293,40 @@ function buildRootIndex() {
 
     const html = `
 ${TEMPLATE_HEADER}
-<main class="blog-container">
-<h1>MathTrauma Blog</h1>
-<ul>
-${CATEGORIES.map(c => `<li><a href="${c}/index.html">${decodeURIComponent(c)}</a></li>`).join("")}
-</ul>
-</main>
+<div class="hero-band">
+    <div class="hero-grid">
+        <div>
+            <div class="eyebrow">환영합니다</div>
+            <h1 class="hero-title">MathTrauma Blog</h1>
+            <p class="hero-lede">수학, 알고리즘, 프로그래밍에 대한 이야기</p>
+        </div>
+        <div class="hero-panel">
+            <strong>카테고리</strong>
+            <p>관심 있는 주제를 선택하세요</p>
+        </div>
+    </div>
+</div>
+
+<div class="page-grid">
+    <main class="post-feed">
+        <div class="card-grid">
+            ${CATEGORIES.map(c => `
+                <a href="${c}/index.html" class="post-card">
+                    <div class="card-kicker">카테고리</div>
+                    <h3>${decodeURIComponent(c)}</h3>
+                    <p class="card-excerpt">포스트 보러가기 →</p>
+                </a>
+            `).join('')}
+        </div>
+    </main>
+    
+    <aside class="sidebar">
+        <div class="panel">
+            <h4>About</h4>
+            <p>수학과 프로그래밍, 그리고 알고리즘에 대한 깊이 있는 탐구</p>
+        </div>
+    </aside>
+</div>
 ${TEMPLATE_FOOTER}
 `;
 
