@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 한숨만 나오는 학생들 </title>
+    <title> Math Trauma </title>
     <link rel="stylesheet" href="/trauma.css" />
 </head>
 
 <body>
     <!-- 배경 비디오 -->
 <div class="video-background">
-    <iframe  
+    <!-- <iframe  
         src="https://www.youtube.com/embed/1G3ZGT1-1n8?autoplay=1&mute=1&loop=1&playlist=1G3ZGT1-1n8" 
         frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen>
-    </iframe>
+    </iframe> -->
+    <div id="canvas-container"></div>
 </div>
 
 <div class="content">
@@ -103,6 +104,16 @@
 
 </body>
 </html>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+    }
+  }
+</script>
+
+<script type="module" src="./scripts/main.js"></script>
 
 <script>
     // Smooth scrolling

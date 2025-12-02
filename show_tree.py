@@ -40,7 +40,7 @@ def show_tree(directory='.', prefix='', output_file=None):
             # 현재 항목 출력
             write_line(f"{prefix}{connector}{icon} {item.name}")
             
-            if item.is_dir():
+            if item.is_dir() and item.name != "dist":
                 # 다음 레벨의 접두사 설정
                 extension = '    ' if is_last_item else '│   '
                 show_tree(item, prefix + extension, output_file)
