@@ -21,10 +21,8 @@ function getCategories() {
         .map(dirent => dirent.name)
         .filter(name => !name.startsWith('.')); // 숨김 폴더 제외
 }
-
 const CATEGORIES = getCategories();
-console.log(`📂 발견된 카테고리 (${CATEGORIES.length}개):`, CATEGORIES);
-// 페이지 깊이에 따라 CSS 경로를 반환하는 함수
+
 function getCssPath(depth = 0) {
     if (depth === 0) return "trauma.css";
     return "../".repeat(depth) + "trauma.css";
