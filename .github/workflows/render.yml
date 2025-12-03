@@ -34,7 +34,7 @@ jobs:
 
     - name: Copy static files to dist
       run: |
-        cp index.html dist/
+        # cp index.html dist/
         cp trauma.css dist/
         cp .nojekyll dist/
         cp -r scripts dist/
