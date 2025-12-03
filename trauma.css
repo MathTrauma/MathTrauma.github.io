@@ -477,9 +477,9 @@ body.article-page {
 .article-shell {
     max-width: 1200px;
     margin: 28px auto 60px;
-    padding: 0 12px;
+    padding: 0 10px;
     display: grid;
-    grid-template-columns: 260px minmax(0, 1fr) 280px;
+    grid-template-columns: 160px minmax(0, 1fr) 200px;
     gap: 18px;
 }
 
