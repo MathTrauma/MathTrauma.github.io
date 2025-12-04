@@ -267,7 +267,7 @@ function main() {
     for (const category of CATEGORIES) {
         renderCategory(category, force);
     }
-    buildRootIndex();
+    //buildRootIndex();
 }
 
 main();
