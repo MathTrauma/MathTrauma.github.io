@@ -65,12 +65,12 @@ export class VoxelWorld {
 
   createObjects() {
     const configs = [
-      { id: 'problems', type: 'problem', position: [4, 0, 5], url: 'https://www.youtube.com/', label: 'Problems' },
-      { id: 'tools', type: 'tool', position: [4, 0, 5], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
-      { id: 'math', type: 'math', position: [-4, 0, 0], url: 'https://www.wolframalpha.com/', label: 'Math' },
-      { id: 'computer', type: 'computer', position: [-1.5, 0, 2], url: 'https://github.com/', label: 'Computer' },
+      { id: 'problems', type: 'problem', position: [4, 0, -3], url: 'https://www.youtube.com/', label: 'Problems' },
+      { id: 'tools', type: 'tool', position: [0, 2, 2], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
+      { id: 'math', type: 'math', position: [-4, 0, -3], url: 'https://www.wolframalpha.com/', label: 'Math' },
+      { id: 'computer', type: 'computer', position: [-1.5, 0, -2], url: 'https://github.com/', label: 'Computer' },
       { id: 'game', type: 'game', position: [1.5, 0, 2], url: 'https://store.steampowered.com/', label: 'Game' },
-      { id: 'youtube', type: 'youtube', position: [4, 0, 0], url: 'https://www.youtube.com/', label: 'YouTube' },
+      { id: 'youtube', type: 'youtube', position: [4, 0, -1], url: 'https://www.youtube.com/', label: 'YouTube' },
     ];
 
     configs.forEach(config => {
@@ -249,9 +249,7 @@ export class VoxelWorld {
     this.container.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
 
     this.interactiveObjects.forEach((obj, index) => {
-      obj.mesh.position.y =
-        obj.config.position[1] + Math.sin(time * 2 + index) * 0.2;
-
+      obj.mesh.position.y = obj.config.position[1] + Math.sin(time * 2 + index) * 0.2;
       obj.mesh.rotation.y = Math.sin(time * 0.5 + index) * 0.3;
 
       let isHovered = false;

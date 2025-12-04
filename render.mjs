@@ -67,30 +67,6 @@ function getHeaderHtml(depth = 0) {
     // header.html을 읽어서 CSS 경로와 네비게이션을 주입
     // (templates/header.html 파일이 있어야 합니다. 없으면 아래 문자열 사용)
     let headerTemplate = readFileSafe(path.join(TEMPLATE_DIR, "header.html"));
-    
-    // header.html이 아직 없다면 기본값 사용 (나중에 파일로 분리 추천)
-    if (!headerTemplate) {
-        headerTemplate = `
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathTrauma Blog</title>
-    <link rel="stylesheet" href="{{CSS_PATH}}">
-</head>
-<body class="blog-shell">
-<div class="site-frame">
-    <nav class="top-nav">
-        <div class="nav-inner">
-            <a href="/" class="brand">MathTrauma</a>
-            <div class="nav-links">
-                {{NAV_LINKS}}
-            </div>
-        </div>
-    </nav>
-        `;
-    }
 
     return headerTemplate
         .replace('{{CSS_PATH}}', cssPath)
