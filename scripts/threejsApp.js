@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class VoxelWorld {
   constructor(container) {
@@ -11,6 +12,7 @@ export class VoxelWorld {
     this.animationId = null;
     this.interactiveObjects = [];
     this.clock = new THREE.Clock();
+    this.controls = null;
 
     // 바인딩 안정화
     this.onWindowResize = this.onWindowResize.bind(this);
@@ -31,10 +33,19 @@ export class VoxelWorld {
     // 2. Scene
     this.scene.background = new THREE.Color('#111827');
     this.scene.fog = new THREE.Fog('#a1b8b7', 10, 50);
-
+    
     // 3. Camera
     this.camera.position.set(0, 5, 15);
     this.camera.lookAt(0, 0, 0);
+    
+    // 3-1. Controls 
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.screenSpacePanning = false;
+    this.controls.minDistance = 5;
+    this.controls.maxDistance = 30;
+    this.controls.maxPolarAngle = Math.PI / 2;
 
     // 4. Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -56,8 +67,8 @@ export class VoxelWorld {
 
     // 7. Events
     window.addEventListener('resize', this.onWindowResize);
-    window.addEventListener('mousemove', this.onMouseMove);
-    window.addEventListener('click', this.onClick);
+    this.renderer.domElement.addEventListener('mousemove', this.onMouseMove);
+    this.renderer.domElement.addEventListener('click', this.onClick);
 
     // 8. Loop
     this.animate();
@@ -66,11 +77,11 @@ export class VoxelWorld {
   createObjects() {
     const configs = [
       { id: 'problems', type: 'problem', position: [4, 0, -3], url: 'https://www.youtube.com/', label: 'Problems' },
-      { id: 'tools', type: 'tool', position: [0, 2, 2], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
-      { id: 'math', type: 'math', position: [-4, 0, -3], url: 'https://www.wolframalpha.com/', label: 'Math' },
-      { id: 'computer', type: 'computer', position: [-1.5, 0, -2], url: 'https://github.com/', label: 'Computer' },
-      { id: 'game', type: 'game', position: [1.5, 0, 2], url: 'https://store.steampowered.com/', label: 'Game' },
-      { id: 'youtube', type: 'youtube', position: [4, 0, -1], url: 'https://www.youtube.com/', label: 'YouTube' },
+      { id: 'tools', type: 'tool', position: [0, 3, 2], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
+      { id: 'math', type: 'math', position: [-4, 1, 4], url: 'https://www.wolframalpha.com/', label: 'Math' },
+      { id: 'computer', type: 'computer', position: [-1.5, 0, 5], url: 'https://github.com/', label: 'Computer' },
+      { id: 'game', type: 'game', position: [1.5, 0, 3], url: 'https://www.mathtrauma.com/PrimeShooter/', label: 'Game' },
+      { id: 'youtube', type: 'youtube', position: [6, 0, -1], url: 'https://www.youtube.com/', label: 'YouTube' },
     ];
 
     configs.forEach(config => {
@@ -175,23 +186,19 @@ export class VoxelWorld {
     }
 
     if (type === 'tool') {
-      baseColor = '#64748b'; // 회색 금속 느낌
-      const handleColor = '#475569'; // 어두운 회색
+      baseColor = '#64748b';
+      const handleColor = '#475569';
 
-      // 렌치 헤드 (상단 조절 부분)
       for (let x = -2; x <= 2; x++) {
         voxels.push({ x, y: 5, z: 0, color: baseColor });
       }
       
-      // 렌치 헤드 개구부
       voxels.push({ x: -1, y: 4, z: 0, color: baseColor });
       voxels.push({ x: 1, y: 4, z: 0, color: baseColor });
       
-      // 렌치 목 부분
       voxels.push({ x: 0, y: 4, z: 0, color: handleColor });
       voxels.push({ x: 0, y: 3, z: 0, color: handleColor });
       
-      // 렌치 손잡이
       for (let y = 1; y <= 2; y++) {
         for (let x = -1; x <= 1; x++) {
           voxels.push({ x, y, z: 0, color: handleColor });
@@ -240,6 +247,7 @@ export class VoxelWorld {
 
   animate() {
     this.animationId = requestAnimationFrame(this.animate.bind(this));
+    this.controls.update();
     const time = this.clock.getElapsedTime();
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
@@ -276,9 +284,13 @@ export class VoxelWorld {
       cancelAnimationFrame(this.animationId);
     }
 
+    if (this.controls) {
+      this.controls.dispose();
+    }
+
     window.removeEventListener('resize', this.onWindowResize);
-    window.removeEventListener('mousemove', this.onMouseMove);
-    window.removeEventListener('click', this.onClick);
+    this.renderer.domElement.removeEventListener('mousemove', this.onMouseMove);
+    this.renderer.domElement.removeEventListener('click', this.onClick);
 
     this.container.removeChild(this.renderer.domElement);
     this.renderer.dispose();

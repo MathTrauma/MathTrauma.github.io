@@ -73,14 +73,7 @@ function getHeaderHtml(depth = 0) {
         .replace('{{NAV_LINKS}}', navLinksHtml);
 }
 
-const FOOTER_HTML = readFileSafe(path.join(TEMPLATE_DIR, "footer.html")) || `
-    <footer class="footer">
-        <p>&copy; 2025 MathTrauma Blog. All rights reserved.</p>
-    </footer>
-</div>
-</body>
-</html>
-`;
+const FOOTER_HTML = readFileSafe(path.join(TEMPLATE_DIR, "footer.html")) ;
 
 function ensureDir(dir) {
     if (!fs.existsSync(dir)) { fs.mkdirSync(dir, { recursive: true }); }
