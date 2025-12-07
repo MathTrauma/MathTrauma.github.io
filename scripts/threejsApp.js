@@ -76,12 +76,20 @@ export class VoxelWorld {
 
   createObjects() {
     const configs = [
-      { id: 'problems', type: 'problem', position: [4, 0, -3], url: 'https://www.youtube.com/', label: 'Problems' },
-      { id: 'tools', type: 'tool', position: [0, 3, 2], url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
-      { id: 'math', type: 'math', position: [-4, 1, 4], url: 'https://www.wolframalpha.com/', label: 'Math' },
-      { id: 'computer', type: 'computer', position: [-1.5, 0, 5], url: 'https://github.com/', label: 'Computer' },
-      { id: 'game', type: 'game', position: [1.5, 0, 3], url: 'https://www.mathtrauma.com/PrimeShooter/', label: 'Game' },
-      { id: 'youtube', type: 'youtube', position: [6, 0, -1], url: 'https://www.youtube.com/', label: 'YouTube' },
+      { id: 'problems', type: 'problem', position: [4, 0, -3], 
+        url: 'https://www.youtube.com/watch?v=fvxhiLpHVNU&list=PLL_VLIbQsOXWaKAuanhl6bRs_pGeV-v4T', 
+        label: 'Problems' },
+      { id: 'tools', type: 'tool', position: [0, 3, 2], 
+        url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
+      { id: 'math', type: 'math', position: [-4, 1, 4], 
+        url: 'https://www.youtube.com/watch?v=fvxhiLpHVNU&list=PLL_VLIbQsOXWaKAuanhl6bRs_pGeV-v4T', 
+        label: 'Math' },
+      { id: 'computer', type: 'computer', position: [-1.5, 0, 5], 
+        url: 'https://github.com/', label: 'Computer' },
+      { id: 'game', type: 'game', position: [1.5, 0, 3], 
+        url: 'https://www.mathtrauma.com/PrimeShooter/', label: 'Game' },
+      { id: 'youtube', type: 'youtube', position: [6, 0, -1], 
+        url: 'https://www.youtube.com/@mathtrauma/videos', label: 'YouTube' },
     ];
 
     configs.forEach(config => {
