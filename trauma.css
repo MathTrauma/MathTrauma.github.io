@@ -21,10 +21,8 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
-    color: #e5e7eb;
-    /* 밝은 색으로 변경 */
-    background: #0d1117;
-    /* 다크 배경으로 변경 */
+    color: #e5e7eb; /* 밝은 색으로 변경 */
+    background: #0d1117; /* 다크 배경으로 변경 */
     min-height: 100vh;
 }
 
@@ -38,7 +36,7 @@ a:hover {
 }
 
 /* ---- Landing (existing) ---- */
-.video-background {
+.page-background {
     position: fixed;
     top: 0;
     left: 0;
@@ -48,7 +46,7 @@ a:hover {
     pointer-events: none; /* 마우스 이벤트 통과 */
 }
 
-.video-background video, .video-background iframe {
+.page-background video, .page-background iframe {
     min-width: 100%;
     min-height: 100%;
     width: auto;
@@ -60,14 +58,13 @@ a:hover {
     object-fit: cover;
 }
 
-.video-overlay {
+.page-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 0;
 }
 
 #canvas-container {
@@ -83,7 +80,7 @@ a:hover {
     pointer-events: none; /* 기본적으로 이벤트 통과 */
 }
 
-.main-view {
+.front-nav {
     font-size: 3rem;
     height: 100vh;
     display: flex;

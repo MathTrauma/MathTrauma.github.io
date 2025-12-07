@@ -240,7 +240,7 @@ export class VoxelWorld {
 
       const found = this.interactiveObjects.find(obj => obj.mesh === current);
       if (found) {
-        window.open(found.config.url, '_blank');
+        window.open(found.config.url, '_self');
       }
     }
   }
