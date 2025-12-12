@@ -23,11 +23,8 @@ function getCategories() {
 }
 const CATEGORIES = getCategories();
 
-// 헬퍼 함수: 파일 읽기 (없으면 빈 문자열 반환)
 function readFileSafe(filePath) {
-    if (fs.existsSync(filePath)) {
-        return fs.readFileSync(filePath, "utf-8");
-    }
+    if (fs.existsSync(filePath)) return fs.readFileSync(filePath, "utf-8"); 
     return "";
 }
 

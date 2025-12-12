@@ -9,8 +9,11 @@ export class VoxelWorld {
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
+
     this.animationId = null;
     this.interactiveObjects = [];
+    this.sceneGroups = [];
+
     this.clock = new THREE.Clock();
     this.controls = null;
 
@@ -75,20 +78,36 @@ export class VoxelWorld {
 
   createObjects() {
     const configs = [
-      { id: 'problems', type: 'problem', position: [4, 0, -3], 
+      { 
+        id: 'problems', type: 'problem', position: [4, 0, -3], 
         url: 'https://www.youtube.com/watch?v=fvxhiLpHVNU&list=PLL_VLIbQsOXWaKAuanhl6bRs_pGeV-v4T', 
-        label: 'Problems' },
-      { id: 'tools', type: 'tool', position: [0, 3, 2], 
-        url: 'https://www.mathtrauma.com/CompositeFunction/', label: 'Tools' },
-      { id: 'math', type: 'math', position: [-4, 1, 4], 
+        label: 'Problems' 
+      },
+      { 
+        id: 'tools', type: 'tool', position: [0, 3, 2], 
+        url: 'https://www.mathtrauma.com/CompositeFunction/', 
+        label: 'Tools' 
+      },
+      { 
+        id: 'math', type: 'math', position: [-4, 1, 4], 
         url: 'https://www.youtube.com/watch?v=fvxhiLpHVNU&list=PLL_VLIbQsOXWaKAuanhl6bRs_pGeV-v4T', 
-        label: 'Math' },
-      { id: 'computer', type: 'computer', position: [-1.5, 0, 5], 
-        url: 'https://github.com/', label: 'Computer' },
-      { id: 'game', type: 'game', position: [1.5, 0, 3], 
-        url: 'https://www.mathtrauma.com/PrimeShooter/', label: 'Game' },
-      { id: 'youtube', type: 'youtube', position: [6, 0, -1], 
-        url: 'https://www.youtube.com/@mathtrauma/videos', label: 'YouTube' },
+        label: 'Math' 
+      },
+      { 
+        id: 'computer', type: 'computer', position: [-1.5, 0, 5], 
+        url: 'https://github.com/', 
+        label: 'Computer' 
+      },
+      { 
+        id: 'game', type: 'game', position: [1.5, 0, 3], 
+        url: 'https://www.mathtrauma.com/PrimeShooter/', 
+        label: 'Game' 
+      },
+      { 
+        id: 'youtube', type: 'youtube', position: [6, 0, -1], 
+        url: 'https://www.youtube.com/@mathtrauma/videos', 
+        label: 'YouTube' 
+      },
     ];
 
     configs.forEach(config => {
@@ -102,6 +121,8 @@ export class VoxelWorld {
 
       this.scene.add(meshGroup);
     });
+
+    this.sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
   }
 
   createVoxel(x, y, z, color, size = 0.25) {
@@ -235,9 +256,10 @@ export class VoxelWorld {
   onClick() {
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
-    const sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
-    const intersects = this.raycaster.intersectObjects(sceneGroups, true);
+    //const sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
+    //const intersects = this.raycaster.intersectObjects(sceneGroups, true);
 
+    const intersects = this.raycaster.intersectObjects(this.sceneGroups, true);
     if (intersects.length > 0) {
       let current = intersects[0].object;
 
@@ -258,9 +280,10 @@ export class VoxelWorld {
     const time = this.clock.getElapsedTime();
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
-    const sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
-    const intersects = this.raycaster.intersectObjects(sceneGroups, true);
-
+    // const sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
+    // const intersects = this.raycaster.intersectObjects(sceneGroups, true);
+    
+    const intersects = this.raycaster.intersectObjects(this.sceneGroups, true);
     this.container.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
 
     this.interactiveObjects.forEach((obj, index) => {
