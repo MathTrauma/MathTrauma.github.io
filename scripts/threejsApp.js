@@ -14,7 +14,6 @@ export class VoxelWorld {
     this.clock = new THREE.Clock();
     this.controls = null;
 
-    // 바인딩 안정화
     this.onWindowResize = this.onWindowResize.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
