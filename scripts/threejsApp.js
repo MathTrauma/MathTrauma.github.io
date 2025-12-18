@@ -80,7 +80,7 @@ export class VoxelWorld {
     const configs = [
       { 
         id: 'problems', type: 'problem', position: [4, 0, -3], 
-        url: 'https://www.youtube.com/watch?v=fvxhiLpHVNU&list=PLL_VLIbQsOXWaKAuanhl6bRs_pGeV-v4T', 
+        url: 'https://www.mathtrauma.com/Problem-Bank/', 
         label: 'Problems' 
       },
       { 
