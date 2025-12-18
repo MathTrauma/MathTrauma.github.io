@@ -145,6 +145,12 @@ export class VoxelWorld {
     let voxels = [];
     let baseColor = '#ffffff';
 
+    if (type === 'problem') {
+      baseColor = '#eb82f6';
+      for (let y = -2; y <= 2; y++) voxels.push({ x: 0, y: y + 5, z: -2 });
+      for (let x = -2; x <= 2; x++) voxels.push({ x, y: 5, z: -2 });
+    }
+
     if (type === 'math') {
       baseColor = '#3b82f6';
       for (let y = -2; y <= 2; y++) voxels.push({ x: 0, y: y + 3, z: 0 });
