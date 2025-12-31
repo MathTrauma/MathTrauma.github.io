@@ -160,7 +160,7 @@ export class VoxelWorld {
       p5Container.style.display = 'none';
       document.body.appendChild(p5Container);
 
-      createP5Sine(container, (canvas) => {
+      createP5Sine(p5Container, (canvas) => {
         _texture = new THREE.CanvasTexture(canvas);
         _texture.colorSpace = THREE.SRGBColorSpace;
 
