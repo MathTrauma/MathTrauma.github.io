@@ -1,7 +1,7 @@
 // import p5 from 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js';
 
 
-export function createP5Sine(sketchParent) {
+export function createP5Sine(sketchParent, onReady) {
     return new p5((p) => {
         let t = 0;
         const R = 60;
@@ -11,6 +11,10 @@ export function createP5Sine(sketchParent) {
             p.createCanvas(512, 256);
             p.pixelDensity(1);
             p.background(255);
+
+            if (onReady) {
+                onReady(p.canvas);
+            }
         };
 
         p.draw = () => {

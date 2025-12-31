@@ -121,6 +121,9 @@ export class VoxelWorld {
 
     configs.forEach(config => {
       const meshGroup = this.generateVoxelMesh(config.type);
+
+      if(config.type === 'board') return;
+
       meshGroup.position.set(...config.position);
 
       this.interactiveObjects.push({
@@ -157,18 +160,32 @@ export class VoxelWorld {
       p5Container.style.display = 'none';
       document.body.appendChild(p5Container);
 
-      const p5Instance = createP5Sine(p5Container);
-      const p5Canvas = p5Instance.canvas;
+      createP5Sine(container, (canvas) => {
+        _texture = new THREE.CanvasTexture(canvas);
+        _texture.colorSpace = THREE.SRGBColorSpace;
 
-      _texture = new THREE.CanvasTexture(p5Canvas);
-      _texture.colorSpace = THREE.SRGBColorSpace;
+        const material = new THREE.MeshBasicMaterial({ map: _texture });
+        const mesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(2.5, 1.25),
+          material
+        );
 
-      const material = new THREE.MeshBasicMaterial({
-        map: _texture,
-        transparent: true
+        scene.add(mesh);
       });
 
-      return new THREE.Mesh(geometry, material);
+
+      // const p5Instance = createP5Sine(p5Container);
+      // const p5Canvas = p5Instance.canvas;
+
+      // _texture = new THREE.CanvasTexture(p5Canvas);
+      // _texture.colorSpace = THREE.SRGBColorSpace;
+
+      // const material = new THREE.MeshBasicMaterial({
+      //   map: _texture,
+      //   transparent: true
+      // });
+
+      // return new THREE.Mesh(geometry, material);
     }
 
 
