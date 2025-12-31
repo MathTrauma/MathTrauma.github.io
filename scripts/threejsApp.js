@@ -154,26 +154,27 @@ export class VoxelWorld {
 
   generateVoxelMesh(type) {
     if (type === 'board') {
-      const geometry = new THREE.BoxGeometry(2,2,2);
-
       const p5Container = document.createElement('div');
       p5Container.style.display = 'none';
       document.body.appendChild(p5Container);
-
+      
       createP5Sine(p5Container, (canvas) => {
         _texture = new THREE.CanvasTexture(canvas);
         _texture.colorSpace = THREE.SRGBColorSpace;
-
+        
         const material = new THREE.MeshBasicMaterial({ map: _texture });
         const mesh = new THREE.Mesh(
-          new THREE.PlaneGeometry(2.5, 1.25),
+          new THREE.BoxGeometry(2, 2, 2),
           material
         );
 
+        mesh.position.set(-4, 2, -2);
+        
         this.scene.add(mesh);
       });
-
-
+      
+      
+      // const geometry = new THREE.BoxGeometry(2,2,2);
       // const p5Instance = createP5Sine(p5Container);
       // const p5Canvas = p5Instance.canvas;
 
