@@ -1,6 +1,6 @@
 디렉토리 구조:
 
-📁 /Users/mathtrauma/_Web/MathTrauma.github.io
+📁 /Users/mathtrauma/__Web_published/MathTrauma.github.io
 ├── 📁 .github
 │   ├── 📁 workflows
 │   │   ├── 📄 activation.yml
@@ -11,37 +11,35 @@
 ├── 📁 dist
 ├── 📁 posts
 │   ├── 📁 algorithm
-│   │   ├── 📄 BOJ1445.md
-│   │   ├── 📄 container.md
-│   │   ├── 📄 test.html
-│   │   └── 📄 열혈강호3.md
+│   │   ├── 📄 boj_10217.md
+│   │   ├── 📄 boj_11377.md
+│   │   ├── 📄 boj_1445.md
+│   │   ├── 📄 boj_2517.md
+│   │   ├── 📄 boj_6549.md
+│   │   └── 📄 container.md
 │   ├── 📁 analysis
 │   │   ├── 📄 first.md
 │   │   ├── 📄 StirlingNumber.md
 │   │   ├── 📄 Tauber Theorem.md
 │   │   └── 📄 test.html
-│   ├── 📁 complex
-│   │   ├── 📄 empty.md
-│   │   └── 📄 test.html
-│   ├── 📁 geometry
-│   │   ├── 📄 empty.md
-│   │   └── 📄 index.html
-│   ├── 📁 Problems%20And%20Solutions
+│   ├── 📁 Problems And Solutions
 │   │   └── 📄 empty.md
-│   ├── 📁 unity
-│   │   ├── 📄 empty.md
-│   │   └── 📄 test.html
-│   └── 📁 visualized-math
-│       └── 📄 empty.md
+│   └── 📁 unity
+│       ├── 📄 empty.md
+│       └── 📄 test.html
 ├── 📁 scripts
 │   ├── 📄 main.js
 │   └── 📄 threejsApp.js
 ├── 📁 templates
+│   ├── 📄 category_index.html
 │   ├── 📄 footer.html
-│   └── 📄 header.html
+│   ├── 📄 header.html
+│   ├── 📄 post_layout.html
+│   └── 📄 root_index.html
 ├── 📄 .DS_Store
 ├── 📄 .gitignore
 ├── 📄 .nojekyll
+├── 📄 CLAUDE.md
 ├── 📄 directory_tree.txt
 ├── 📄 index.html
 ├── 📄 package-lock.json

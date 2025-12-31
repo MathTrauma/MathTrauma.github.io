@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+import { createP5Sine } from './p5_sine.js';
+
 export class VoxelWorld {
   constructor(container) {
     this.container = container;
@@ -108,6 +110,11 @@ export class VoxelWorld {
         url: 'https://www.youtube.com/@mathtrauma/videos', 
         label: 'YouTube' 
       },
+      {
+        id: 'board', type: 'board', position: [-4, 2, -2],
+        url: 'https://www.mathtrauma.com/start',
+        label: 'start'
+      },
     ];
 
     configs.forEach(config => {
@@ -141,6 +148,28 @@ export class VoxelWorld {
   }
 
   generateVoxelMesh(type) {
+    if (type === 'board') {
+      const geometry = new THREE.BoxGeometry(2,2,2);
+
+      const p5Container = document.createElement('div');
+      p5Container.style.display = 'none';
+      document.body.appendChild(p5Container);
+
+      const p5Instance = createP5Sine(p5Container);
+      const p5Canvas = p5Instance.canvas;
+
+      texture = new THREE.CanvasTexture(p5Canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+
+      const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true
+      });
+
+      return new THREE.Mesh(geometry, material);
+    }
+
+
     const group = new THREE.Group();
     let voxels = [];
     let baseColor = '#ffffff';

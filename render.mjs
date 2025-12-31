@@ -24,11 +24,13 @@ function getCategories() {
 const CATEGORIES = getCategories();
 
 function readFileSafe(filePath) {
-    if (fs.existsSync(filePath)) return fs.readFileSync(filePath, "utf-8"); 
+    if (fs.existsSync(filePath)) 
+        return fs.readFileSync(filePath, "utf-8"); 
+
     return "";
 }
 
-// 헬퍼 함수: 템플릿 로드 및 데이터 치환 (핵심 기능!)
+// 템플릿 로드 및 데이터 치환 (핵심 기능!)
 function renderTemplate(templateName, data) {
     const templatePath = path.join(TEMPLATE_DIR, templateName);
     let html = readFileSafe(templatePath);
@@ -38,16 +40,14 @@ function renderTemplate(templateName, data) {
         return "";
     }
 
-    // data 객체의 키-값을 이용해 {{KEY}}를 Value로 치환
     for (const key in data) {
-        // 정규표현식으로 {{KEY}}를 찾아 모두 바꿈
         const regex = new RegExp(`{{${key}}}`, 'g');
         html = html.replace(regex, data[key]);
     }
     return html;
 }
 
-// CSS 경로 계산
+
 function getCssPath(depth = 0) {
     if (depth === 0) return "trauma.css";
     return "../".repeat(depth) + "trauma.css";
