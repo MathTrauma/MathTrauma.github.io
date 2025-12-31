@@ -158,7 +158,7 @@ export class VoxelWorld {
       const p5Instance = createP5Sine(p5Container);
       const p5Canvas = p5Instance.canvas;
 
-      texture = new THREE.CanvasTexture(p5Canvas);
+      const texture = new THREE.CanvasTexture(p5Canvas);
       texture.colorSpace = THREE.SRGBColorSpace;
 
       const material = new THREE.MeshBasicMaterial({
