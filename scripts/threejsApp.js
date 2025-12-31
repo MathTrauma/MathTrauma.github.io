@@ -170,7 +170,7 @@ export class VoxelWorld {
           material
         );
 
-        scene.add(mesh);
+        this.scene.add(mesh);
       });
 
 
