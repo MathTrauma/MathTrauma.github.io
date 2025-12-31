@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 import { createP5Sine } from './p5_sine.js';
 
+let _texture;
+
 export class VoxelWorld {
   constructor(container) {
     this.container = container;
@@ -158,11 +160,11 @@ export class VoxelWorld {
       const p5Instance = createP5Sine(p5Container);
       const p5Canvas = p5Instance.canvas;
 
-      const texture = new THREE.CanvasTexture(p5Canvas);
-      texture.colorSpace = THREE.SRGBColorSpace;
+      _texture = new THREE.CanvasTexture(p5Canvas);
+      _texture.colorSpace = THREE.SRGBColorSpace;
 
       const material = new THREE.MeshBasicMaterial({
-        map: texture,
+        map: _texture,
         transparent: true
       });
 
@@ -340,6 +342,8 @@ export class VoxelWorld {
         obj.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
       }
     });
+
+    if(_texture) _texture.needsUpdate = true;
 
     this.renderer.render(this.scene, this.camera);
   }
