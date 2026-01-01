@@ -124,9 +124,18 @@ export class VoxelWorld {
 
             this.projectTexture = texture;
 
+            const faceMaterials = [
+                new THREE.MeshStandardMaterial({ color: '#444444' }), // +X
+                new THREE.MeshStandardMaterial({ color: '#444444' }), // -X
+                new THREE.MeshStandardMaterial({ color: '#444444' }), // +Y
+                new THREE.MeshStandardMaterial({ color: '#444444' }), // -Y
+                new THREE.MeshBasicMaterial({ map: texture }),        // +Z (front)
+                new THREE.MeshStandardMaterial({ color: '#444444' })  // -Z
+            ];
+
             const mesh = new THREE.Mesh(
                 new THREE.BoxGeometry(2, 2, 2),
-                new THREE.MeshBasicMaterial({ map: texture })
+                faceMaterials
             );
 
             mesh.position.set(...config.position);
@@ -229,7 +238,7 @@ export class VoxelWorld {
             voxels.push({ x: 1, y: 4, z: 0, color: baseColor }); 
             voxels.push({ x: 0, y: 4, z: 0, color: handleColor }); 
             voxels.push({ x: 0, y: 3, z: 0, color: handleColor }); 
-            
+
             for (let y = 1; y <= 2; y++) { 
                 for (let x = -1; x <= 1; x++) { 
                     voxels.push({ x, y, z: 0, color: handleColor }); 
@@ -290,13 +299,10 @@ export class VoxelWorld {
         this.container.style.cursor = hits.length ? 'pointer' : 'default';
 
         this.interactiveObjects.forEach((obj, i) => {
-            obj.mesh.position.y =
-                obj.config.position[1] + Math.sin(time * 2 + i) * 0.2;
+            obj.mesh.position.y = obj.config.position[1] + Math.sin(time * 2 + i) * 0.2;
             obj.mesh.rotation.y = Math.sin(time * 0.5 + i) * 0.3;
 
-            const hovered =
-                hits.length &&
-                this.findRoot(hits[0].object) === obj.mesh;
+            const hovered = hits.length && this.findRoot(hits[0].object) === obj.mesh;
 
             obj.mesh.scale.lerp(
                 new THREE.Vector3(hovered ? 1.2 : 1, hovered ? 1.2 : 1, hovered ? 1.2 : 1),
