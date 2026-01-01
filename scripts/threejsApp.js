@@ -168,6 +168,21 @@ export class VoxelWorld {
             for (let x = -2; x <= 2; x++) voxels.push({ x, y: 3, z: 0 });
         }
 
+        if (type === 'computer') { 
+            baseColor = '#9ca3af'; 
+            const screenColor = '#60a5fa'; 
+            for (let x = -3; x <= 3; x++) { 
+                for (let y = 0; y <= 4; y++) { 
+                    const isScreen = x > -3 && x < 3 && y > 0 && y < 4; 
+                    voxels.push({ x, y: y + 1, z: 0, color: isScreen ? screenColor : baseColor }); 
+                } 
+            } 
+            voxels.push({ x: 0, y: 0, z: 0 }); 
+            voxels.push({ x: 0, y: 1, z: 0 }); 
+            voxels.push({ x: -1, y: 0, z: 0 }); 
+            voxels.push({ x: 1, y: 0, z: 0 }); 
+        }
+
         if (type === 'game') {
             baseColor = '#22c55e';
             const invader = [
@@ -186,6 +201,40 @@ export class VoxelWorld {
                     if (c === 'X') voxels.push({ x: x - 4, y, z: 0 });
                 });
             });
+        }
+
+        if (type === 'youtube') { 
+            baseColor = '#ef4444'; 
+            const playColor = '#ffffff'; 
+            for (let x = -3; x <= 3; x++) { 
+                for (let y = 0; y <= 4; y++) { 
+                    let color = baseColor; 
+                    if (x >= -1 && x <= 1 && y >= 1 && y <= 3) { 
+                        if (x === -1 || (x === 0 && y >= 1.5 && y <= 2.5)) { 
+                            color = playColor; 
+                        } 
+                    } 
+                    voxels.push({ x, y: y + 1, z: 0, color }); 
+                } 
+            } 
+        }
+
+        if (type === 'tool') { 
+            baseColor = '#64748b'; 
+            const handleColor = '#475569'; 
+            for (let x = -2; x <= 2; x++) { 
+                voxels.push({ x, y: 5, z: 0, color: baseColor }); 
+            } 
+            voxels.push({ x: -1, y: 4, z: 0, color: baseColor }); 
+            voxels.push({ x: 1, y: 4, z: 0, color: baseColor }); 
+            voxels.push({ x: 0, y: 4, z: 0, color: handleColor }); 
+            voxels.push({ x: 0, y: 3, z: 0, color: handleColor }); 
+            
+            for (let y = 1; y <= 2; y++) { 
+                for (let x = -1; x <= 1; x++) { 
+                    voxels.push({ x, y, z: 0, color: handleColor }); 
+                } 
+            } 
         }
 
         voxels.forEach(v => {
