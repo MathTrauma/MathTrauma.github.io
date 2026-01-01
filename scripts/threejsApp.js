@@ -112,18 +112,10 @@ export class VoxelWorld {
         url: 'https://www.youtube.com/@mathtrauma/videos', 
         label: 'YouTube' 
       },
-      {
-        id: 'board', type: 'board', position: [-4, 2, -2],
-        url: 'https://www.mathtrauma.com/start',
-        label: 'start'
-      },
     ];
 
     configs.forEach(config => {
       const meshGroup = this.generateVoxelMesh(config.type);
-
-      if(config.type === 'board') return;
-
       meshGroup.position.set(...config.position);
 
       this.interactiveObjects.push({
@@ -136,6 +128,41 @@ export class VoxelWorld {
 
     this.sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
   }
+
+
+  createProject() {
+    const config  = {
+      id: 'board', type: 'board', position: [-4, 2, -2],
+      url: 'https://www.mathtrauma.com/start',
+      label: 'start'
+    }
+    
+    const p5Container = document.createElement('div');
+    p5Container.style.display = 'none';
+    document.body.appendChild(p5Container);
+
+    createP5Sine(p5Container, (canvas) => {
+      _texture = new THREE.CanvasTexture(canvas);
+      _texture.colorSpace = THREE.SRGBColorSpace;
+
+      const material = new THREE.MeshBasicMaterial({ map: _texture });
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(2, 2, 2),
+        material
+      );
+
+      mesh.position.set(-4, 2, -2);
+
+      this.interactiveObjects.push({
+        mesh, config
+      });
+
+      this.scene.add(mesh);
+    });
+
+  }
+
+  
 
   createVoxel(x, y, z, color, size = 0.25) {
     const geometry = new THREE.BoxGeometry(size, size, size);
@@ -153,42 +180,6 @@ export class VoxelWorld {
   }
 
   generateVoxelMesh(type) {
-    if (type === 'board') {
-      const p5Container = document.createElement('div');
-      p5Container.style.display = 'none';
-      document.body.appendChild(p5Container);
-      
-      createP5Sine(p5Container, (canvas) => {
-        _texture = new THREE.CanvasTexture(canvas);
-        _texture.colorSpace = THREE.SRGBColorSpace;
-        
-        const material = new THREE.MeshBasicMaterial({ map: _texture });
-        const mesh = new THREE.Mesh(
-          new THREE.BoxGeometry(2, 2, 2),
-          material
-        );
-
-        mesh.position.set(-4, 2, -2);
-        
-        this.scene.add(mesh);
-      });
-      
-      
-      // const geometry = new THREE.BoxGeometry(2,2,2);
-      // const p5Instance = createP5Sine(p5Container);
-      // const p5Canvas = p5Instance.canvas;
-
-      // _texture = new THREE.CanvasTexture(p5Canvas);
-      // _texture.colorSpace = THREE.SRGBColorSpace;
-
-      // const material = new THREE.MeshBasicMaterial({
-      //   map: _texture,
-      //   transparent: true
-      // });
-
-      // return new THREE.Mesh(geometry, material);
-    }
-
 
     const group = new THREE.Group();
     let voxels = [];
