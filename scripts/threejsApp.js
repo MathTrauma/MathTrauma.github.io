@@ -70,6 +70,7 @@ export class VoxelWorld {
 
     // 6. Objects
     this.createObjects();
+    this.createProject();
 
     // 7. Events
     window.addEventListener('resize', this.onWindowResize);
