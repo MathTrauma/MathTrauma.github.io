@@ -47,7 +47,6 @@ function renderTemplate(templateName, data) {
     return html;
 }
 
-
 function getCssPath(depth = 0) {
     if (depth === 0) return "trauma.css";
     return "../".repeat(depth) + "trauma.css";

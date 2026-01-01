@@ -72,6 +72,9 @@ export class VoxelWorld {
     this.createObjects();
     this.createProject();
 
+    this.sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
+
+
     // 7. Events
     window.addEventListener('resize', this.onWindowResize);
     this.renderer.domElement.addEventListener('mousemove', this.onMouseMove);
@@ -127,9 +130,7 @@ export class VoxelWorld {
       this.scene.add(meshGroup);
     });
 
-    this.sceneGroups = this.interactiveObjects.map(obj => obj.mesh);
   }
-
 
   createProject() {
     const config  = {
@@ -163,8 +164,6 @@ export class VoxelWorld {
 
   }
 
-  
-
   createVoxel(x, y, z, color, size = 0.25) {
     const geometry = new THREE.BoxGeometry(size, size, size);
     const material = new THREE.MeshStandardMaterial({
@@ -181,7 +180,6 @@ export class VoxelWorld {
   }
 
   generateVoxelMesh(type) {
-
     const group = new THREE.Group();
     let voxels = [];
     let baseColor = '#ffffff';
